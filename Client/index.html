@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Fixed Income Securities</title>
+        <link rel="stylesheet" type="text/css" href="./index.css">
+    </head>
+    <body>
+        <div id="app">
+            <header>Fixed Income Securities</header>
+            <main>
+                <div class="scroll">
+                    <div class="left">
+                        <div id="charts"></div>
+                    </div>
+                    <div class="right">
+                        <div class="right-control">
+                            <p>Nelson Siegel Model</p>
+                            <input value="Adjust Parameters" type="button" class="bgtrans btn" @click="changeRightShow(true)">
+                            <input value="Show model codes" type="button" class="bgtrans btn" @click="changeRightShow(false)">
+                        </div>
+                        <div class="right-parameters" v-show="rightShow">
+                            <form id="form001">
+                                <p>Adjust Parameters</p>
+                                <br/>
+                                <label for="lambda">λ (lambda)</label>
+                                <input id="lambda" type="text" v-model="lambda" class="bgtrans">
+                                <br/>
+                                <label for="beta0">β0 (beta0)</label> 
+                                <input id="beta0" type="text" v-model="beta0" class="bgtrans">
+                                <br/>
+                                <label for="beta1">β1 (beta1)</label>
+                                <input id="beta1" type="text" v-model="beta1" class="bgtrans">
+                                <br/>
+                                <label for="beta2">β2 (beta2)</label>
+                                <input id="beta2" type="text" v-model="beta2" class="bgtrans">
+                                <br/><br/>
+                                <p>Fit Model</p>
+                                <label for="rowNo">Row?</label>
+                                <input id="rowNo" type="text" v-model="rowNo" class="bgtrans">
+                                <br/>
+                                <input type="button" value="Fit One" class="bgtrans btn" @click="getOne()" title="get one group of parameters">
+                                <input type="button" value="Fit All" class="bgtrans btn" @click="getAll()" title="get optimal parameters">
+                                <input type="reset" value="Reset" class="bgtrans btn" @click="getTestData()">
+                            </form>
+                            <p v-text="history"></p>
+                        </div>
+                        <div class="right-codes" v-show="!rightShow">
+                            <iframe src="./code.html" class="frame"></iframe>
+                        </div>
+                    </div>
+                </div>
+            </main>
+            <footer>
+                FIS Group (
+                <span id="mouseX" class="bgtrans"></span>
+                ,
+                <span id="mouseY" class="bgtrans"></span>
+                )
+            </footer>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+        <script src="https://cdn.jsdelivr.net/npm/axios@0.21.0/dist/axios.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/echarts@4.9.0/dist/echarts.min.js"></script>
+        <script src="./index.js" async="async"></script>
+        <script src="./control.js"></script>
+    </body>
+
+</html>
