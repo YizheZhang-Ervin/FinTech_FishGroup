@@ -8,20 +8,25 @@
 
     <body>
         <div id="app">
-            <header>FISH Group ( <span id="mouseX" class="bgtrans"></span> , <span id="mouseY" class="bgtrans"></span> )</header>
+            <header>
+                FISH Group ( <span id="mouseX" class="bgtrans"></span> , <span id="mouseY" class="bgtrans"></span> )
+                <img @click="changeMenuShow" class="menuBtn"
+                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAABVUlEQVR4Xu1YOwrCQBDdiZWNQohnsLDwBoIIxtIzGDyVBs9gacADiI0HECxFRDStkKw3cA0Z1gzzUoeZt2/efMko/0j5+w0IgAKUM4AUUC4AFEGkAFJAOQNIAeUCcHeBcJKcKDBDiUSVZLbPLJ1/w+5MARAABSAFUANUF8HeNBlZE3QkdgFbmNtjvzrW6gISH14Fs7MNVjEm8V8QIDFqnJihAE42JdqCAiRGjROzUwFhvBwEZdHmdOrLFgX0uu/Sc61BCOsw1mGsw1iHVa/D6otgNFv0qWiJbINvsnmerS+12qCvnv0vP85B6F/AfPkFAb6YbqofKKCpkfGFCwrwxXRT/TgVEMWLsbXUbeoDvuMqr49sc6g1CKkfhUEADiI4iOAgovogIrP9/Y7aOQf8bkrmnyBAZtz4UEMBfFzKtAQFyIwbH2oogI9LmZagAJlx40OtXgEfUC+LQbV3zEEAAAAASUVORK5CYII=">
+                <div class="menu" :style="width" v-show="menuShow">
+                    <input type="button" value="Home" class="bgtrans menuInnerBtn" @click="changeRightShow(1)">
+                    <input type="button" value="NS Model" class="bgtrans menuInnerBtn" @click="changeRightShow(2)">
+                    <input type="button" value="Group" class="bgtrans menuInnerBtn" @click="changeRightShow(3)">
+                </div>
+            </header>
             <main>
                 <div class="left">
-                    <div id="charts"></div>
+                    <div id="charts" :style="halfheight"></div>
                 </div>
-                <div class="right">
-                    <div class="right-control">
+                <div class="right" :style="height">
+                    <!-- Home -->
+                    <div class="right-parameters" v-show="homeShow">
                         <p>Nelson Siegel Model</p>
-                        <input value="Adjust Parameters" type="button" class="bgtrans btn"
-                            @click="changeRightShow(true)">
-                        <input value="Show model codes" type="button" class="bgtrans btn"
-                            @click="changeRightShow(false)">
-                    </div>
-                    <div class="right-parameters" v-show="rightShow">
+                        <br />
                         <form id="form001">
                             <p>Adjust Parameters</p>
                             <br />
@@ -49,22 +54,35 @@
                         </form>
                         <p v-text="history"></p>
                     </div>
-                    <div class="right-codes" v-show="!rightShow">
+                    <!-- NS Model -->
+                    <div class="right-codes" v-show="modelShow">
                         <iframe src="./code.html" class="frame"></iframe>
+                    </div>
+                    <!-- team -->
+                    <div v-show="teamShow">
+                        <p>Fixed Income Securities Happy Group (FISH Group)</p>
+                        <br />
+                        <div class="team">
+                            <div>
+                                <p>Shark</p>
+                                <img src="./static/shark.png" width=100>
+                            </div>
+                            <div>
+                                <p>Shark</p>
+                                <img src="./static/shark.png" width=100>
+                            </div>
+                            <div>
+                                <p>Shark</p>
+                                <img src="./static/shark.png" width=100>
+                            </div>
+                            <div>
+                                <p>Shark</p>
+                                <img src="./static/shark.png" width=100>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </main>
-            <footer>
-                <div>
-                    <p>Fixed Income Securities Happy Group (FISH Group)</p>
-                </div>
-                <div class="bottom">
-                    <p>1</p>
-                    <p>2</p>
-                    <p>1</p>
-                    <p>2</p>
-                </div>
-            </footer>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/vue"></script>
         <script src="https://cdn.jsdelivr.net/npm/axios@0.21.0/dist/axios.min.js"></script>

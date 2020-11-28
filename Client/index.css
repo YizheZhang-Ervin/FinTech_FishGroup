@@ -1,6 +1,5 @@
 *{
     margin:0;
-    /* background-color: beige; */
 }
 
 #app{
@@ -15,13 +14,31 @@ html,body,#app,main,.scroll,.left,.right{
 /* 头部 */
 header{
     top:0;
-    background-color:rgba(0,0,0,0.8);
+    background-color:rgba(0,0,0,1);
     text-indent: 2%;
     font-size: 1.5em;
     position: fixed;
     width:100%;
     height:64px;
     line-height: 64px;
+    z-index: 10;
+}
+
+.menuBtn{
+    float: right;
+}
+
+.menu{
+    background-color: rgba(0,0,0,0.8);
+    z-index: 10;
+}
+
+.menuInnerBtn{
+    border:none;
+    font-size: large;
+    height: 64px;
+    width: 100px;
+    /* line-height: 64px; */
 }
 
 /* 底部 */
@@ -35,12 +52,6 @@ footer{
     line-height: 64px;
 }
 
-.bottom{
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-}
-
 /* 中间部分 */
 main{
     margin-top:64px;
@@ -52,13 +63,11 @@ main{
 /* 中间左部 */
 .left{
     border-right: 5px solid rgba(0,0,0,0.8);
-    padding-top: 32px;
-    padding-bottom: 32px;
+    padding-top: 64px;
 }
 
 #charts{
     width:100%;
-    height:100%;
 }
 
 /* 中间右部 */
@@ -66,13 +75,7 @@ main{
     background-color:rgba(0,0,0,0.8);
     font-size: 1.25em;
     text-align: center;
-    padding-top: 32px;
-    padding-bottom: 32px;
-}
-
-/* 右部控制按钮 */
-.right-control{
-    height: 20%;
+    padding-top: 64px;
 }
 
 /* 右部调参部件 */
@@ -86,13 +89,21 @@ main{
 
 /* 右部代码组件 */
 .right-codes{
-    height:80%;
+    height:100%;
+    top:64px;
 }
 
 .frame{
     width:100%;
     height:100%;
     border:none;
+}
+
+/* 团队组件 */
+.team{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
 }
 
 /* 通用样式 */
