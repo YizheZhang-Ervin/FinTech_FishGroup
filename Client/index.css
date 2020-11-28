@@ -1,5 +1,6 @@
 *{
     margin:0;
+    /* background-color: beige; */
 }
 
 #app{
@@ -11,10 +12,11 @@ html,body,#app,main,.scroll,.left,.right{
     width:100%;
 }
 
-/* 顶部，底部 */
-header,footer{
+/* 头部 */
+header{
+    top:0;
     background-color:rgba(0,0,0,0.8);
-    text-align: center;
+    text-indent: 2%;
     font-size: 1.5em;
     position: fixed;
     width:100%;
@@ -22,31 +24,36 @@ header,footer{
     line-height: 64px;
 }
 
-header{
-    top:0;
+/* 底部 */
+footer{
+    background-color:rgba(0,0,0,0.8);
+    text-align: center;
+    font-size: 1.5em;
+    position: relative;
+    width:100%;
+    height:auto;
+    line-height: 64px;
 }
 
-footer{
-    bottom:0;
+.bottom{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
 }
 
 /* 中间部分 */
 main{
-    top:64px;
-    bottom:64px;
-    position: fixed;
-    height: auto;
-}
-
-.scroll{
+    margin-top:64px;
     display: flex;
     justify-content: center;
-    height:100%;
+    height: 100%;
 }
 
 /* 中间左部 */
 .left{
     border-right: 5px solid rgba(0,0,0,0.8);
+    padding-top: 32px;
+    padding-bottom: 32px;
 }
 
 #charts{
@@ -56,21 +63,21 @@ main{
 
 /* 中间右部 */
 .right{
-    background-color: rgba(19,21,34,0.85);
+    background-color:rgba(0,0,0,0.8);
     font-size: 1.25em;
     text-align: center;
-    overflow: hidden;
-    height:100%;
+    padding-top: 32px;
+    padding-bottom: 32px;
 }
 
 /* 右部控制按钮 */
 .right-control{
-    height: 15%;
+    height: 20%;
 }
 
 /* 右部调参部件 */
 .right-parameters{
-    box-shadow:10px 10px 10px 10px rgba(19,21,34,0.9);
+    box-shadow:10px 10px 10px 10px rgba(0,0,0,0.8);
     width:70%;
     margin: 32px auto;
     padding-top: 5%;
@@ -79,7 +86,7 @@ main{
 
 /* 右部代码组件 */
 .right-codes{
-    height:85%;
+    height:80%;
 }
 
 .frame{

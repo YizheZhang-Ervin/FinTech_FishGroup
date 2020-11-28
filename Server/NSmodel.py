@@ -69,22 +69,6 @@ def getData(data,usetestData=False):
         totalData = [ [tIndex,np.array(data.loc[i][1:].values,dtype="float")] for i in range(rows)]
         return totalData
 
-def run(data,i,usetestData,plotStatus,avgDict):
-    tindex,yields = getData(data,usetestData)[i]
-    nsm = NSCurveFamily()
-    nsm.estimateParam(tindex,yields)
-    
-    if plotStatus:
-        plot(nsm,tindex,yields)
-    
-    # average of parameters
-    avgDict['t'] = avgDict.get('t',0) + nsm.tau0
-    avgDict['b0'] = avgDict.get('b0',0)+ nsm.beta0
-    avgDict['b1'] = avgDict.get('b1',0)+ nsm.beta1
-    avgDict['b2'] = avgDict.get('b2',0) + nsm.beta2
-
-    return tindex,yields,nsm.getSpot(tindex)
-
 def plot(nsm,tindex,yields):
     print('Best fit param: (RSqr=%.3f)' % nsm.rsqr)
     print('tau=%.2f intercept=%.3f beta1=%.3f beta2=%.3f' % (nsm.tau0, nsm.beta0, nsm.beta1, nsm.beta2) )
@@ -103,6 +87,23 @@ def plot(nsm,tindex,yields):
     plt.xlabel('t(Yr)')
     plt.ylabel('forward rate(%)')
     plt.show()
+
+def run(data,i,usetestData,plotStatus,avgDict):
+    tindex,yields = getData(data,usetestData)[i]
+    nsm = NSCurveFamily()
+    nsm.estimateParam(tindex,yields)
+    
+    # plot
+    if plotStatus:
+        plot(nsm,tindex,yields)
+    
+    # average of parameters
+    avgDict['t'] = avgDict.get('t',0) + nsm.tau0
+    avgDict['b0'] = avgDict.get('b0',0)+ nsm.beta0
+    avgDict['b1'] = avgDict.get('b1',0)+ nsm.beta1
+    avgDict['b2'] = avgDict.get('b2',0) + nsm.beta2
+
+    return tindex,yields,nsm.getSpot(tindex)
 
 def test(id):
     base_dir = os.path.dirname(__file__)
