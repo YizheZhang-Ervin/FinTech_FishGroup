@@ -99,6 +99,11 @@ main{
     border:none;
 }
 
+/* paper组件 */
+.right-paper{
+    height:100%;
+}
+
 /* 团队组件 */
 .team{
     display: flex;

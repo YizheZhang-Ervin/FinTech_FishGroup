@@ -9,9 +9,10 @@ var app = new Vue({
             modelShow:false,
             teamShow:false,
             menuShow:true,
+            paperShow:false,
             history:"",
             rowNo:0,
-            lambda:0,
+            tau:0,
             beta0:0,
             beta1:0,
             beta2:0,
@@ -30,7 +31,7 @@ var app = new Vue({
                     this.x = response.data.tIndex;
                     this.y = response.data.spots;
                     this.y_real = response.data.yields;
-                    this.lambda = response.data.avgDict.t;
+                    this.tau = response.data.avgDict.t;
                     this.beta0 = response.data.avgDict.b0;
                     this.beta1 = response.data.avgDict.b1;
                     this.beta2 = response.data.avgDict.b2;
@@ -48,7 +49,7 @@ var app = new Vue({
                         this.x = response.data.tIndex;
                         this.y = response.data.spots;
                         this.y_real = response.data.yields;
-                        this.lambda = response.data.avgDict.t;
+                        this.tau = response.data.avgDict.t;
                         this.beta0 = response.data.avgDict.b0;
                         this.beta1 = response.data.avgDict.b1;
                         this.beta2 = response.data.avgDict.b2;
@@ -61,7 +62,7 @@ var app = new Vue({
         getAll:function(){
             axios.get("http://127.0.0.1:5000/api/all")
                 .then((response) => {
-                    this.lambda = response.data.avgDict.t;
+                    this.tau = response.data.avgDict.t;
                     this.beta0 = response.data.avgDict.b0;
                     this.beta1 = response.data.avgDict.b1;
                     this.beta2 = response.data.avgDict.b2;
@@ -112,14 +113,22 @@ var app = new Vue({
                 this.homeShow = true;
                 this.modelShow = false;
                 this.teamShow = false;
+                this.paperShow = false;
             }else if(flag==2){
                 this.homeShow = false;
                 this.modelShow = true;
                 this.teamShow = false;
+                this.paperShow = false;
             }else if(flag==3){
                 this.homeShow = false;
                 this.modelShow = false;
                 this.teamShow = true;
+                this.paperShow = false;
+            }else if(flag==4){
+                this.homeShow = false;
+                this.modelShow = false;
+                this.teamShow = false;
+                this.paperShow = true;
             }
             
         },

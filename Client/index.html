@@ -14,7 +14,8 @@
                     src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAABVUlEQVR4Xu1YOwrCQBDdiZWNQohnsLDwBoIIxtIzGDyVBs9gacADiI0HECxFRDStkKw3cA0Z1gzzUoeZt2/efMko/0j5+w0IgAKUM4AUUC4AFEGkAFJAOQNIAeUCcHeBcJKcKDBDiUSVZLbPLJ1/w+5MARAABSAFUANUF8HeNBlZE3QkdgFbmNtjvzrW6gISH14Fs7MNVjEm8V8QIDFqnJihAE42JdqCAiRGjROzUwFhvBwEZdHmdOrLFgX0uu/Sc61BCOsw1mGsw1iHVa/D6otgNFv0qWiJbINvsnmerS+12qCvnv0vP85B6F/AfPkFAb6YbqofKKCpkfGFCwrwxXRT/TgVEMWLsbXUbeoDvuMqr49sc6g1CKkfhUEADiI4iOAgovogIrP9/Y7aOQf8bkrmnyBAZtz4UEMBfFzKtAQFyIwbH2oogI9LmZagAJlx40OtXgEfUC+LQbV3zEEAAAAASUVORK5CYII=">
                 <div class="menu" :style="width" v-show="menuShow">
                     <input type="button" value="Home" class="bgtrans menuInnerBtn" @click="changeRightShow(1)">
-                    <input type="button" value="NS Model" class="bgtrans menuInnerBtn" @click="changeRightShow(2)">
+                    <input type="button" value="Codes" class="bgtrans menuInnerBtn" @click="changeRightShow(2)">
+                    <input type="button" value="Paper" class="bgtrans menuInnerBtn" @click="changeRightShow(4)">
                     <input type="button" value="Group" class="bgtrans menuInnerBtn" @click="changeRightShow(3)">
                 </div>
             </header>
@@ -30,8 +31,8 @@
                         <form id="form001">
                             <p>Adjust Parameters</p>
                             <br />
-                            <label for="lambda">λ (lambda)</label>
-                            <input id="lambda" type="text" v-model="lambda" class="bgtrans">
+                            <label for="tau">τ (tau)</label>
+                            <input id="tau" type="text" v-model="tau" class="bgtrans">
                             <br />
                             <label for="beta0">β0 (beta0)</label>
                             <input id="beta0" type="text" v-model="beta0" class="bgtrans">
@@ -57,6 +58,9 @@
                     <!-- NS Model -->
                     <div class="right-codes" v-show="modelShow">
                         <iframe src="./code.html" class="frame"></iframe>
+                    </div>
+                    <div class="right-paper" v-show="paperShow">
+                        <embed src="./static/NSModel.pdf" type="application/pdf" width="100%" height="100%" />
                     </div>
                     <!-- team -->
                     <div v-show="teamShow">
