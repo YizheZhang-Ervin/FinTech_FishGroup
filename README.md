@@ -1,4 +1,4 @@
 # FixedIncomeSecurities
-Nelson Nelson Model
+Nelson-Siegel Model
 
 vue + flask + echarts + numpy + pandas + statsmodels
