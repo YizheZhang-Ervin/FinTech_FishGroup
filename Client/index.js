@@ -16,66 +16,101 @@ var app = new Vue({
             beta0:0,
             beta1:0,
             beta2:0,
+            dataSet:2019,
+            rsquare:0,
             width:{width:(parseInt(window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth)) + 'px'},
             height:{height:(parseInt(window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight)-128) + 'px'},
             halfheight:{height:(parseInt(window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight)/1.5) + 'px'}
         }
     },
     mounted(){
-        this.getTestData();
+        this.getOne();
     },
     methods: {
-        getTestData:function(){
-            axios.get("http://127.0.0.1:5000/api/test")
-                .then((response) => {
-                    this.x = response.data.tIndex;
-                    this.y = response.data.spots;
-                    this.y_real = response.data.yields;
-                    this.tau = response.data.avgDict.t;
-                    this.beta0 = response.data.avgDict.b0;
-                    this.beta1 = response.data.avgDict.b1;
-                    this.beta2 = response.data.avgDict.b2;
-                    this.plot();
-                }, (err) => {
-                    console.log(err.data);
-                })
+        clear:function(){
+            this.x=[];
+            this.y=[];
+            this.y_real=[];
+            this.rowNo=0;
+            this.tau=0;
+            this.beta0=0;
+            this.beta1=0;
+            this.beta2=0;
+            this.dataSet=2019;
+            this.rsquare=0;
+            this.plot();
+        },
+        getName:function(dataSet){
+            if(dataSet==2019){
+                return "Treasury_2020_1To11"
+            }else if(dataSet==2020){
+                return "Treasury_2019_Full"
+            }
         },
         getOne:function(){
-            axios.get(`http://127.0.0.1:5000/api/${this.rowNo}`)
+            axios.get(`http://127.0.0.1:5000/api/${this.getName(this.dataSet)}/${this.rowNo}`)
                 .then((response) => {
-                    if(response.data.avgDict == "error"){
-                        this.rowNo = "Should between 0 ~ "+response.data.spots;
+                    if(response.data.error == "error"){
+                        this.rowNo = "Should > 0 ";
+                        this.dataSet = "2019 or 2020";
                     }else{
-                        this.x = response.data.tIndex;
-                        this.y = response.data.spots;
-                        this.y_real = response.data.yields;
-                        this.tau = response.data.avgDict.t;
-                        this.beta0 = response.data.avgDict.b0;
-                        this.beta1 = response.data.avgDict.b1;
-                        this.beta2 = response.data.avgDict.b2;
+                        this.x = response.data.x;
+                        this.y = response.data.y;
+                        this.y_real = response.data.y_real;
+                        this.tau = response.data.t0;
+                        this.beta0 = response.data.b0;
+                        this.beta1 = response.data.b1;
+                        this.beta2 = response.data.b2;
+                        this.rsquare = response.data.rsquare;
+                        this.plot();
                     }
-                    this.plot();
                 }, (err) => {
                     console.log(err.data);
                 })
         },
         getAll:function(){
-            axios.get("http://127.0.0.1:5000/api/all")
+            axios.get(`http://127.0.0.1:5000/api/${this.getName(this.dataSet)}/-1`)
                 .then((response) => {
-                    this.tau = response.data.avgDict.t;
-                    this.beta0 = response.data.avgDict.b0;
-                    this.beta1 = response.data.avgDict.b1;
-                    this.beta2 = response.data.avgDict.b2;
+                    if(response.data.error == "error"){
+                        this.rowNo = "Should > 0 ";
+                        this.dataSet = "2019 or 2020";
+                    }else{
+                        this.rsquare = response.data.rsquare;
+                        this.x = response.data.x;
+                        this.y = response.data.y;
+                        this.y_real = response.data.y_real;
+                        this.tau = response.data.paras[0];
+                        this.beta0 = response.data.paras[1];
+                        this.beta1 = response.data.paras[2];
+                        this.beta2 = response.data.paras[3];
+                        this.plot();
+                    }
                 }, (err) => {
                     console.log(err.data);
                 })
         },
-        postApi:function(){
-            axios.post("/axios", { key: 'value' })
-                .then(function (response) {
-                    console.log(response);
+        postOne:function(){
+            axios.post(`http://127.0.0.1:5000/api/fit/one`, {
+                 "data": JSON.stringify(Array(this.tau,this.beta0,this.beta1,this.beta2)),
+                 "dataSet": JSON.stringify(this.getName(this.dataSet)) 
+                })
+                .then((response)=> {
+                    if(response.data.error == "error"){
+                        this.rowNo = "Should > 0 ";
+                        this.dataSet = "2019 or 2020";
+                    }else{
+                        this.rsquare = response.data.rsquare;
+                        this.x = response.data.x;
+                        this.y = response.data.y;
+                        this.y_real = response.data.y_real;
+                        this.tau = response.data.paras[0];
+                        this.beta0 = response.data.paras[1];
+                        this.beta1 = response.data.paras[2];
+                        this.beta2 = response.data.paras[3];
+                        this.plot();
+                    }
                 }, function (err) {
-                    console.log(err);
+                    console.log(err.data);
                 })
         },
         plot:function(){

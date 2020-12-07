@@ -42,16 +42,23 @@
                             <br />
                             <label for="beta2">β2 (beta2)</label>
                             <input id="beta2" type="text" v-model="beta2" class="bgtrans">
-                            <br /><br />
-                            <p>Fit Model</p>
-                            <label for="rowNo">Row?</label>
+                            <br />
+                            <label for="rs">RSquare</label>
+                            <input id="rs" type="text" v-model="rsquare" class="bgtrans">
+                            <br />
+                            <label for="ds">DataSet</label>
+                            <input id="ds" type="text" v-model="dataSet" class="bgtrans">
+                            <br />
+                            <label for="rowNo">Date (row)</label>
                             <input id="rowNo" type="text" v-model="rowNo" class="bgtrans">
                             <br />
-                            <input type="button" value="Fit One" class="bgtrans btn" @click="getOne()"
-                                title="get one group of parameters">
-                            <input type="button" value="Fit All" class="bgtrans btn" @click="getAll()"
+                            <input type="button" value="getOne" class="bgtrans btn" @click="getOne()"
+                                title="get one row condition">
+                            <input type="button" value="getAll" class="bgtrans btn" @click="getAll()"
                                 title="get optimal parameters">
-                            <input type="reset" value="Reset" class="bgtrans btn" @click="getTestData()">
+                            <input type="button" value="postOne" class="bgtrans btn" @click="postOne()"
+                                title="try one group of parameters">
+                            <input type="button" value="Reset" class="bgtrans btn" @click="clear()">
                         </form>
                         <p v-text="history"></p>
                     </div>
