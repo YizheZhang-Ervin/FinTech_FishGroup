@@ -6,20 +6,25 @@
     <body style="color:gold">
         <p style="text-align: center;">Nelson Siegel Model</p>
         <pre>
+The following codes are Adapted by NSCurveFamily of David Y (OnRiskAndReturn@gmail.com)
+
 class NSCurveFamily:
-    def __init__(self):
-        self.HasEstParam = False
+    def __init__(self,tau0=1,beta0=1,beta1=1,beta2=1):
+        self.tau0 = tau0
+        self.beta0 = beta0
+        self.beta1 = beta1
+        self.beta2 = beta2
 
     def fitNSModel(self, tau, t_seq, zr_seq):
-        t_to_tau = [ t/tau for t in t_seq]
+        t_to_tau = [ t/tau  for t in t_seq] 
         xterm1 = [ (1.0-math.exp(-tt))/tt for tt in t_to_tau]
         xterm2 = [ (1.0-math.exp(-tt))/tt-math.exp(-tt) for tt in t_to_tau]
         x = np.array([xterm1, xterm2]).T
         x = sm.add_constant(x)
-        wt=np.append(t_seq[0],np.diff(t_seq))
+        wt=np.append(t_seq[0],np.diff(t_seq))   
         res = sm.WLS(zr_seq, x, wt).fit()
-        return (res.params, res.rsquared)
-
+        return (res.params, res.rsquared)    
+         
     def estNSParam(self, t_seq, zr_seq):
         tau_univ = [0.1, 0.15, 0.2, 0.3, 0.5, 0.75, 1, 1.5, 2, 3, 5, 7.5, 10]
         rsq_univ = [ self.fitNSModel(tau, t_seq, zr_seq)[1] for tau in tau_univ]
@@ -27,33 +32,28 @@ class NSCurveFamily:
         opt_param, opt_rsqr = self.fitNSModel(opt_tau, t_seq, zr_seq)
         return (opt_param, opt_tau, opt_rsqr)
 
-    def estimateParam(self, t_seq, zr_seq):
+    def estimateParam(self, t_seq, zr_seq):    
         param, tau, rsqr = self.estNSParam(t_seq, zr_seq)
         self.beta0, self.beta1, self.beta2=param
         self.tau0, self.rsqr = tau, rsqr
-        self.HasEstParam=True
-
+        
     def getSpot(self, t_seq):
-        if self.HasEstParam == False:
-            raise Exception('Parameters are not available')
-        t_to_tau = [ t/self.tau0 for t in t_seq]
+        t_to_tau = [ t/self.tau0  for t in t_seq]
         xterm1 = [ (1.0-math.exp(-tt))/tt for tt in t_to_tau]
         xterm2 = [ (1.0-math.exp(-tt))/tt-math.exp(-tt) for tt in t_to_tau]
         param = [self.beta0, self.beta1, self.beta2]
         x = np.array([xterm1, xterm2]).T
         x = sm.add_constant(x)
         return x.dot(param)
-
-    def getFwdRate(self, t_seq):
-        if self.HasEstParam == False:
-            raise Exception('Parameters are not available')
-        t_to_tau = [ t/self.tau0 for t in t_seq]
+        
+    def getFwdRate(self, t_seq): 
+        t_to_tau = [ t/self.tau0  for t in t_seq]
         xterm1 = [ math.exp(-tt) for tt in t_to_tau]
         xterm2 = [ tt*math.exp(-tt) for tt in t_to_tau]
         param = [self.beta0, self.beta1, self.beta2]
         x = np.array([xterm1, xterm2]).T
         x = sm.add_constant(x)
-        return x.dot(param)
+        return x.dot(param)  
         </pre>
     </body>
 </html>

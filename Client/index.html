@@ -16,6 +16,8 @@
                     <input type="button" value="Home" class="bgtrans menuInnerBtn" @click="changeRightShow(1)">
                     <input type="button" value="Codes" class="bgtrans menuInnerBtn" @click="changeRightShow(2)">
                     <input type="button" value="Paper" class="bgtrans menuInnerBtn" @click="changeRightShow(4)">
+                    <input type="button" value="Data2019" class="bgtrans menuInnerBtn" @click="changeRightShow(5)">
+                    <input type="button" value="Data2020" class="bgtrans menuInnerBtn" @click="changeRightShow(6)">
                     <input type="button" value="Group" class="bgtrans menuInnerBtn" @click="changeRightShow(3)">
                 </div>
             </header>
@@ -29,8 +31,18 @@
                         <p>Nelson Siegel Model</p>
                         <br />
                         <form id="form001">
-                            <p>Adjust Parameters</p>
+                            <p>Choose Data</p>
+                            <label for="ds">DataSet</label>
+                            <input id="ds" type="text" v-model="dataSet" class="bgtrans">
                             <br />
+                            <label for="rowNo">Date (row)</label>
+                            <input id="rowNo" type="text" v-model="rowNo" class="bgtrans">
+                            <br/>
+                            <input type="button" value="Fit (Auto)" class="bgtrans btn" @click="getOne()"
+                                title="get one row condition">
+                            <br />
+                            <br />
+                            <p>Parameters</p>
                             <label for="tau">τ (tau)</label>
                             <input id="tau" type="text" v-model="tau" class="bgtrans">
                             <br />
@@ -43,20 +55,12 @@
                             <label for="beta2">β2 (beta2)</label>
                             <input id="beta2" type="text" v-model="beta2" class="bgtrans">
                             <br />
-                            <label for="rs">RSquare</label>
+                            <label for="rs">ΔY^2</label>
                             <input id="rs" type="text" v-model="rsquare" class="bgtrans">
                             <br />
-                            <label for="ds">DataSet</label>
-                            <input id="ds" type="text" v-model="dataSet" class="bgtrans">
-                            <br />
-                            <label for="rowNo">Date (row)</label>
-                            <input id="rowNo" type="text" v-model="rowNo" class="bgtrans">
-                            <br />
-                            <input type="button" value="getOne" class="bgtrans btn" @click="getOne()"
-                                title="get one row condition">
                             <input type="button" value="getAll" class="bgtrans btn" @click="getAll()"
-                                title="get optimal parameters">
-                            <input type="button" value="postOne" class="bgtrans btn" @click="postOne()"
+                                title="get optimal parameters" hidden>
+                            <input type="button" value="Fit (Manual)" class="bgtrans btn" @click="postOne()"
                                 title="try one group of parameters">
                             <input type="button" value="Reset" class="bgtrans btn" @click="clear()">
                         </form>
@@ -66,8 +70,17 @@
                     <div class="right-codes" v-show="modelShow">
                         <iframe src="./code.html" class="frame"></iframe>
                     </div>
+                    <!-- paper -->
                     <div class="right-paper" v-show="paperShow">
                         <embed src="./static/NSModel.pdf" type="application/pdf" width="100%" height="100%" />
+                    </div>
+                    <!-- data2019 -->
+                    <div class="right-paper" v-show="data2019Show">
+                        <embed src="./static/Treasury_2019_Full.xlsx" type="application/pdf" width="100%" height="100%" />
+                    </div>
+                    <!-- data2020 -->
+                    <div class="right-paper" v-show="data2020Show">
+                        <embed src="./static/Treasury_2020_1To11.xlsx" type="application/pdf" width="100%" height="100%" />
                     </div>
                     <!-- team -->
                     <div v-show="teamShow">
@@ -75,19 +88,19 @@
                         <br />
                         <div class="team">
                             <div>
-                                <p>Shark</p>
+                                <p>Dezhi Yang</p>
                                 <img src="./static/shark.png" width=100>
                             </div>
                             <div>
-                                <p>Shark</p>
+                                <p>Hui Tang</p>
                                 <img src="./static/shark.png" width=100>
                             </div>
                             <div>
-                                <p>Shark</p>
+                                <p>Zenan Lin</p>
                                 <img src="./static/shark.png" width=100>
                             </div>
                             <div>
-                                <p>Shark</p>
+                                <p>Yizhe Zhang</p>
                                 <img src="./static/shark.png" width=100>
                             </div>
                         </div>

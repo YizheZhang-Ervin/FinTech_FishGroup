@@ -10,6 +10,8 @@ var app = new Vue({
             teamShow:false,
             menuShow:true,
             paperShow:false,
+            data2019Show:false,
+            data2020Show:false,
             history:"",
             rowNo:0,
             tau:0,
@@ -41,9 +43,9 @@ var app = new Vue({
             this.plot();
         },
         getName:function(dataSet){
-            if(dataSet==2019){
+            if(dataSet==2020){
                 return "Treasury_2020_1To11"
-            }else if(dataSet==2020){
+            }else if(dataSet==2019){
                 return "Treasury_2019_Full"
             }
         },
@@ -51,9 +53,13 @@ var app = new Vue({
             axios.get(`http://127.0.0.1:5000/api/${this.getName(this.dataSet)}/${this.rowNo}`)
                 .then((response) => {
                     if(response.data.error == "error"){
-                        this.rowNo = "Should > 0 ";
+                        this.rowNo = "0-249(2019), 0-228(2020) ";
                         this.dataSet = "2019 or 2020";
+                        document.getElementById("ds").style.background="rgba(255,0,0,0.5)";
+                        document.getElementById("rowNo").style.background="rgba(255,0,0,0.5)";
                     }else{
+                        document.getElementById("ds").style.background="transparent";
+                        document.getElementById("rowNo").style.background="transparent";
                         this.x = response.data.x;
                         this.y = response.data.y;
                         this.y_real = response.data.y_real;
@@ -91,7 +97,8 @@ var app = new Vue({
         },
         postOne:function(){
             axios.post(`http://127.0.0.1:5000/api/fit/one`, {
-                 "data": JSON.stringify(Array(this.tau,this.beta0,this.beta1,this.beta2)),
+                 "parameters": JSON.stringify(Array(this.tau,this.beta0,this.beta1,this.beta2)),
+                 "row": JSON.stringify(this.rowNo),
                  "dataSet": JSON.stringify(this.getName(this.dataSet)) 
                 })
                 .then((response)=> {
@@ -149,21 +156,43 @@ var app = new Vue({
                 this.modelShow = false;
                 this.teamShow = false;
                 this.paperShow = false;
+                this.data2019Show = false;
+                this.data2020Show = false;
             }else if(flag==2){
                 this.homeShow = false;
                 this.modelShow = true;
                 this.teamShow = false;
                 this.paperShow = false;
+                this.data2019Show = false;
+                this.data2020Show = false;
             }else if(flag==3){
                 this.homeShow = false;
                 this.modelShow = false;
                 this.teamShow = true;
                 this.paperShow = false;
+                this.data2019Show = false;
+                this.data2020Show = false;
             }else if(flag==4){
                 this.homeShow = false;
                 this.modelShow = false;
                 this.teamShow = false;
                 this.paperShow = true;
+                this.data2019Show = false;
+                this.data2020Show = false;
+            }else if(flag==5){
+                this.homeShow = false;
+                this.modelShow = false;
+                this.teamShow = false;
+                this.paperShow = false;
+                this.data2019Show = true;
+                this.data2020Show = false;
+            }else if(flag==6){
+                this.homeShow = false;
+                this.modelShow = false;
+                this.teamShow = false;
+                this.paperShow = false;
+                this.data2019Show = false;
+                this.data2020Show = true;
             }
             
         },

@@ -59,7 +59,7 @@ def getData(dataName="test"):
         return [[testIndex,testYield]]
     else:
         data = pd.read_excel(dataName)
-        data = data.iloc[:-1]
+        data = data.iloc[:]
         tIndex = np.array([round(1/12,3),round(1/6,3),1/4,1/2,1,2,3,5,7,10,20,30])
         rows = data.shape[0]
         totalData = [ [tIndex,np.array(data.loc[i][1:].values,dtype="float")] for i in range(rows)]
@@ -125,9 +125,17 @@ def runData(filename,env="developing",paras=""):
         df_tail = df.tail(1)[['1 Mo','2 Mo','3 Mo','6 Mo','1 Yr','2 Yr','3 Yr','5 Yr','7 Yr','10 Yr','20 Yr','30 Yr']].values[0]
         nsm = NSCurveFamily(*paras)
         tempBest = rsquare(nsm.getSpot(tIndex),df_tail)
-    
     if env=="developing":
         print(tempBest,"t-b0-b1-b2",paras)
         plotNSmodel(tIndex,nsm,df_tail)
     else:
         return tempBest,paras,tIndex,nsm.getSpot(tIndex),df_tail
+
+def postOne(filename,params,row):
+    params = [ float(i) for i in params]
+    tIndex = np.array([round(1/12,3),round(1/6,3),1/4,1/2,1,2,3,5,7,10,20,30])
+    df = pd.read_excel(filename)
+    df_tail = df.iloc[row][['1 Mo','2 Mo','3 Mo','6 Mo','1 Yr','2 Yr','3 Yr','5 Yr','7 Yr','10 Yr','20 Yr','30 Yr']].values
+    nsm = NSCurveFamily(*params)
+    tempBest = rsquare(nsm.getSpot(tIndex),df_tail)
+    return tempBest,params,tIndex,nsm.getSpot(tIndex),df_tail

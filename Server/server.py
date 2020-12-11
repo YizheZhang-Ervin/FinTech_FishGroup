@@ -10,8 +10,9 @@ api = Api(app)
 cors = CORS(app, resources={r"/*": {"origins": "*"}})
 BASE_DIR = os.path.dirname(__file__)
 parser = reqparse.RequestParser()
-parser.add_argument('data', type=str)
+parser.add_argument('parameters', type=str)
 parser.add_argument('dataSet', type=str)
+parser.add_argument('row', type=str)
 
 class modelAPI(Resource):
     def get(self,dataSet,id):
@@ -28,15 +29,22 @@ class modelAPI(Resource):
             return jsonify({"error":"error"})
     
     def post(self,dataSet,id):
-        try:
-            args = parser.parse_args()
-            data = eval(args['data'])
-            dataSet = eval(args['dataSet'])
-            tempBest,paras,x,y,y_real = NSmodel.runData(f"{BASE_DIR}/data/{dataSet}.xlsx","production",data)
-            jsonObj = {"rsquare":tempBest,"paras":paras,"x":list(x),"y":list(y),"y_real":list(y_real)}
-            return jsonify(jsonObj)
-        except Exception:
-            return jsonify({"error":"error"})
+        # try:
+        #     args = parser.parse_args()
+        #     data = eval(args['data'])
+        #     dataSet = eval(args['dataSet'])
+        #     tempBest,paras,x,y,y_real = NSmodel.runData(f"{BASE_DIR}/data/{dataSet}.xlsx","production",data)
+        #     jsonObj = {"rsquare":tempBest,"paras":paras,"x":list(x),"y":list(y),"y_real":list(y_real)}
+        #     return jsonify(jsonObj)
+        # except Exception:
+        #     return jsonify({"error":"error"})
+        args = parser.parse_args()
+        params = eval(args['parameters'])
+        dataSet = eval(args['dataSet'])
+        row = eval(args['row'])
+        tempBest,paras,x,y,y_real = NSmodel.postOne(f"{BASE_DIR}/data/{dataSet}.xlsx",params,row)
+        jsonObj = {"rsquare":tempBest,"paras":paras,"x":list(x),"y":list(y),"y_real":list(y_real)}
+        return jsonify(jsonObj)
 
 api.add_resource(modelAPI, '/api/<dataSet>/<id>')
 
