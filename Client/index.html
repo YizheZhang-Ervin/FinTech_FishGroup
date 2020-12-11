@@ -15,13 +15,13 @@
                 <div class="menu" :style="width" v-show="menuShow">
                     <input type="button" value="Home" class="bgtrans menuInnerBtn" @click="changeRightShow(1)">
                     <input type="button" value="Codes" class="bgtrans menuInnerBtn" @click="changeRightShow(2)">
-                    <input type="button" value="Paper" class="bgtrans menuInnerBtn" @click="changeRightShow(4)">
                     <input type="button" value="Data2019" class="bgtrans menuInnerBtn" @click="changeRightShow(5)">
                     <input type="button" value="Data2020" class="bgtrans menuInnerBtn" @click="changeRightShow(6)">
-                    <input type="button" value="Group" class="bgtrans menuInnerBtn" @click="changeRightShow(3)">
+                    <input type="button" value="Paper" class="bgtrans menuInnerBtn" @click="changeRightShow(4)">
+                    <input type="button" value="Project" class="bgtrans menuInnerBtn" @click="changeRightShow(3)">
                 </div>
             </header>
-            <main>
+            <main style="overflow-y: hidden;">
                 <div class="left">
                     <div id="charts" :style="halfheight"></div>
                 </div>
@@ -37,7 +37,7 @@
                             <br />
                             <label for="rowNo">Date (row)</label>
                             <input id="rowNo" type="text" v-model="rowNo" class="bgtrans">
-                            <br/>
+                            <br />
                             <input type="button" value="Fit (Auto)" class="bgtrans btn" @click="getOne()"
                                 title="get one row condition">
                             <br />
@@ -76,33 +76,75 @@
                     </div>
                     <!-- data2019 -->
                     <div class="right-paper" v-show="data2019Show">
-                        <embed src="./static/Treasury_2019_Full.xlsx" type="application/pdf" width="100%" height="100%" />
+                        <embed src="../Server/data/Treasury_2019_Full.xlsx" type="application/pdf" width="100%"
+                            height="100%" />
                     </div>
                     <!-- data2020 -->
                     <div class="right-paper" v-show="data2020Show">
-                        <embed src="./static/Treasury_2020_1To11.xlsx" type="application/pdf" width="100%" height="100%" />
+                        <embed src="../Server/data/Treasury_2020_1To11.xlsx" type="application/pdf" width="100%"
+                            height="100%" />
                     </div>
                     <!-- team -->
-                    <div v-show="teamShow">
-                        <p>Fixed Income Securities Happy Group (FISH Group)</p>
-                        <br />
-                        <div class="team">
-                            <div>
-                                <p>Dezhi Yang</p>
-                                <img src="./static/shark.png" width=100>
-                            </div>
-                            <div>
-                                <p>Hui Tang</p>
-                                <img src="./static/shark.png" width=100>
-                            </div>
-                            <div>
-                                <p>Zenan Lin</p>
-                                <img src="./static/shark.png" width=100>
-                            </div>
-                            <div>
-                                <p>Yizhe Zhang</p>
-                                <img src="./static/shark.png" width=100>
-                            </div>
+                    <div v-show="teamShow" style="overflow-y: scroll;height:100%">
+                        <embed src="../Server/data/Treasury_2020_1To11.xlsx" type="application/pdf" width="100%"
+                            height="100%" />
+                        <div style="display: none;">
+                            <section>
+                                <p>Fixed Income Securities Happy Group (FISH Group)</p>
+                                <br />
+                                <div class="team">
+                                    <div>
+                                        <p>Dezhi Yang</p>
+                                        <img src="./static/shark.png" width=100>
+                                    </div>
+                                    <div>
+                                        <p>Hui Tang</p>
+                                        <img src="./static/shark.png" width=100>
+                                    </div>
+                                    <div>
+                                        <p>Zenan Lin</p>
+                                        <img src="./static/shark.png" width=100>
+                                    </div>
+                                    <div>
+                                        <p>Yizhe Zhang</p>
+                                        <img src="./static/shark.png" width=100>
+                                    </div>
+                                </div>
+                            </section>
+                            <br />
+                            <hr />
+                            <br />
+                            <section>
+                                <p>Project Goal</p>
+                                <br />
+                                <div style="text-align: left">
+                                    <p>Model: Nelson-Siegel Model</p>
+                                    <p>Goal: Estimate the Level, Slope, and Curvature of Term Structure</p>
+                                    <p>Data1: use first 11 months data to estimate November 30, 2020</p>
+                                    <input type="button" value="Data2019" @click="changeRightShow(5)">
+                                    <p>Data2: use all-year 2019 data to estimate December 31, 2019</p>
+                                    <input type="button" value="Data2020" @click="changeRightShow(6)">
+                                    <br />
+                                    <a style="color: gold;font-size: 0.8em;"
+                                        href="https://www.treasury.gov/resource-center/data-chart-center/interest-rates/Pages/TextView.aspx?data=billrates">
+                                        * Data from U.S. DEPARTMENT OF THE TREASURY
+                                    </a>
+                                </div>
+                            </section>
+                            <br />
+                            <hr />
+                            <br />
+                            <section>
+                                <p>Nelson-Siegel Model</p>
+                                <br />
+                                <img src="./static/NSModel.png" />
+                                <div style="text-align: left;">
+                                    <p>y(t) = beta0+beta1*part1+beta2*(part1-part2)</p>
+                                    <p>part1 = (1-part2)/part3</p>
+                                    <p>part2 = math.e**(-part3)</p>
+                                    <p>part3 = T/tau</p>
+                                </div>
+                            </section>
                         </div>
                     </div>
                 </div>

@@ -27,6 +27,10 @@ var app = new Vue({
     },
     mounted(){
         this.getOne();
+        setInterval(()=>{
+            this.checkVisibility();
+        },1000)
+        
     },
     methods: {
         clear:function(){
@@ -98,7 +102,7 @@ var app = new Vue({
         postOne:function(){
             axios.post(`http://127.0.0.1:5000/api/fit/one`, {
                  "parameters": JSON.stringify(Array(this.tau,this.beta0,this.beta1,this.beta2)),
-                 "row": JSON.stringify(this.rowNo),
+                 "row": this.rowNo,
                  "dataSet": JSON.stringify(this.getName(this.dataSet)) 
                 })
                 .then((response)=> {
@@ -198,6 +202,13 @@ var app = new Vue({
         },
         changeMenuShow:function(){
             this.menuShow = !this.menuShow;
+        },
+        checkVisibility:function(){
+            let vs = document.visibilityState;
+            let date = new Date(Date.now());
+            if(vs=="visible"){
+                document.title = "FISH Group - "+ date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+            }
         }
     }
 });

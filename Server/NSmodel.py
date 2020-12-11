@@ -135,7 +135,7 @@ def postOne(filename,params,row):
     params = [ float(i) for i in params]
     tIndex = np.array([round(1/12,3),round(1/6,3),1/4,1/2,1,2,3,5,7,10,20,30])
     df = pd.read_excel(filename)
-    df_tail = df.iloc[row][['1 Mo','2 Mo','3 Mo','6 Mo','1 Yr','2 Yr','3 Yr','5 Yr','7 Yr','10 Yr','20 Yr','30 Yr']].values
+    df_tail = df.loc[row][['1 Mo','2 Mo','3 Mo','6 Mo','1 Yr','2 Yr','3 Yr','5 Yr','7 Yr','10 Yr','20 Yr','30 Yr']].values
     nsm = NSCurveFamily(*params)
     tempBest = rsquare(nsm.getSpot(tIndex),df_tail)
     return tempBest,params,tIndex,nsm.getSpot(tIndex),df_tail
