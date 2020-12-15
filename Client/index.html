@@ -29,6 +29,7 @@
                     <!-- Home -->
                     <div class="right-parameters" v-show="homeShow">
                         <p>Nelson Siegel Model</p>
+                        <input type="button" :value="engine" class="bgtrans btn" @click="changeEngine()">
                         <br />
                         <form id="form001">
                             <p>Choose Data</p>
@@ -38,13 +39,18 @@
                             <label for="rowNo">Date (row)</label>
                             <input id="rowNo" type="text" v-model="rowNo" class="bgtrans">
                             <br />
-                            <input type="button" value="Fit (Auto)" class="bgtrans btn" @click="getOne()"
+                            <input id="autoNS" type="button" value="Fit NS(Auto)" class="bgtrans btn" @click="getOne()"
                                 title="get one row condition">
+                            <input id="autoNSS" type="button" value="Fit NSS(Auto)" class="bgtrans btn" @click="getNSSOne()"
+                                title="get one row condition" hidden>
                             <br />
                             <br />
                             <p>Parameters</p>
-                            <label for="tau">τ (tau)</label>
-                            <input id="tau" type="text" v-model="tau" class="bgtrans">
+                            <label for="tau0">τ0 (tau0)</label>
+                            <input id="tau0" type="text" v-model="tau0" class="bgtrans">
+                            <br />
+                            <label id="tau1label" for="tau1" style="display: none;">τ1 (tau1)</label>
+                            <input id="tau1" type="text" v-model="tau1" class="bgtrans" hidden>
                             <br />
                             <label for="beta0">β0 (beta0)</label>
                             <input id="beta0" type="text" v-model="beta0" class="bgtrans">
@@ -55,13 +61,18 @@
                             <label for="beta2">β2 (beta2)</label>
                             <input id="beta2" type="text" v-model="beta2" class="bgtrans">
                             <br />
+                            <label id="beta3label" for="beta3" style="display: none;">β3 (beta3)</label>
+                            <input id="beta3" type="text" v-model="beta3" class="bgtrans" hidden>
+                            <br />
                             <label for="rs">ΔY^2</label>
                             <input id="rs" type="text" v-model="rsquare" class="bgtrans">
                             <br />
                             <input type="button" value="getAll" class="bgtrans btn" @click="getAll()"
                                 title="get optimal parameters" hidden>
-                            <input type="button" value="Fit (Manual)" class="bgtrans btn" @click="postOne()"
+                            <input id="manualNS" type="button" value="Fit NS(Manual)" class="bgtrans btn" @click="postOne()"
                                 title="try one group of parameters">
+                            <input id="manualNSS" type="button" value="Fit NSS(Manual)" class="bgtrans btn" @click="postNSSOne()"
+                                title="try one group of parameters" hidden>
                             <input type="button" value="Reset" class="bgtrans btn" @click="clear()">
                         </form>
                         <p v-text="history"></p>
