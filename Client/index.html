@@ -9,7 +9,7 @@
     <body>
         <div id="app">
             <header>
-                FISH Group ( <span id="mouseX" class="bgtrans"></span> , <span id="mouseY" class="bgtrans"></span> )
+                <p title="Fixed Income Security Happy Group">FISH Group ( <span id="mouseX" class="bgtrans"></span> , <span id="mouseY" class="bgtrans"></span> )</p>
                 <img @click="changeMenuShow" class="menuBtn"
                     src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAABVUlEQVR4Xu1YOwrCQBDdiZWNQohnsLDwBoIIxtIzGDyVBs9gacADiI0HECxFRDStkKw3cA0Z1gzzUoeZt2/efMko/0j5+w0IgAKUM4AUUC4AFEGkAFJAOQNIAeUCcHeBcJKcKDBDiUSVZLbPLJ1/w+5MARAABSAFUANUF8HeNBlZE3QkdgFbmNtjvzrW6gISH14Fs7MNVjEm8V8QIDFqnJihAE42JdqCAiRGjROzUwFhvBwEZdHmdOrLFgX0uu/Sc61BCOsw1mGsw1iHVa/D6otgNFv0qWiJbINvsnmerS+12qCvnv0vP85B6F/AfPkFAb6YbqofKKCpkfGFCwrwxXRT/TgVEMWLsbXUbeoDvuMqr49sc6g1CKkfhUEADiI4iOAgovogIrP9/Y7aOQf8bkrmnyBAZtz4UEMBfFzKtAQFyIwbH2oogI9LmZagAJlx40OtXgEfUC+LQbV3zEEAAAAASUVORK5CYII=">
                 <div class="menu" :style="width" v-show="menuShow">
@@ -72,7 +72,7 @@
                     </div>
                     <!-- paper -->
                     <div class="right-paper" v-show="paperShow">
-                        <embed src="./static/NSModel.pdf" type="application/pdf" width="100%" height="100%" />
+                        <embed src="./static/NSModel-Paper.pdf" type="application/pdf" width="100%" height="100%" />
                     </div>
                     <!-- data2019 -->
                     <div class="right-paper" v-show="data2019Show">
@@ -84,10 +84,9 @@
                         <embed src="../Server/data/Treasury_2020_1To11.xlsx" type="application/pdf" width="100%"
                             height="100%" />
                     </div>
-                    <!-- team -->
-                    <div v-show="teamShow" style="overflow-y: scroll;height:100%">
-                        <embed src="../Server/data/Treasury_2020_1To11.xlsx" type="application/pdf" width="100%"
-                            height="100%" />
+                    <!-- project -->
+                    <div v-show="teamShow" style="overflow-y: hidden;height:100%">
+                        <embed src="./static/NSModel-PPT.pdf" type="application/pdf" width="100%" height="100%"  />
                         <div style="display: none;">
                             <section>
                                 <p>Fixed Income Securities Happy Group (FISH Group)</p>

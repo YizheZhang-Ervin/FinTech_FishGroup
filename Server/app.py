@@ -12,7 +12,7 @@ BASE_DIR = os.path.dirname(__file__)
 parser = reqparse.RequestParser()
 parser.add_argument('parameters', type=str)
 parser.add_argument('dataSet', type=str)
-parser.add_argument('row', type=int)
+parser.add_argument('row', type=str)
 
 class modelAPI(Resource):
     def get(self,dataSet,id):
